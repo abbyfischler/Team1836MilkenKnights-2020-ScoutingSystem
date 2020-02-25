@@ -1,340 +1,87 @@
-<!doctype html>
-<!-- SCOUTING FORM FOR FIRST ROBOTICS COMPETITION.
-......Designed by Jared Hasen-Klein (hub.jaredhk.com)
-......for the 2019 season (Deep Space)
-......for Team 1836: The MilkenKnights
-......
-......Free to reuse and modify, please leave credit exposed on form or in source code.
-......
-......Support for form creators: jhasenklein@gmail.com
-......
-......Support for users: contact your team, please.-->
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="main.css">
-    <link rel="icon" type="image/x-icon" href="favicon.ico" />
-    <title>Scouting 2019</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-    <style type="text/css">
-a {
-    border-bottom: 1px dotted #000;
-    text-decoration: none;
-}
-</style>
-  </head>
-  <body>
-<!-- Title. It is helpful to put the event and year clearly
-at the top in varrying colors for testing purposes and so
-that it is clear to users -->
-
-    <h1>Infinite Recharge hola</h1>
-    <h4>Powered by Team 1836: The MilkenKnights
-
-<!-- This is a help box. When clicking "Help" or whatever
-you change it to, the dropdown within div id "help" will
-display. -->
-	    <a class="btn btn-primary btn-small" data-toggle="collapse" href="#help" role="button" aria-expanded="false" aria-controls="comments">
-     Help
-   </a></h4><div class="collapse" id="help">
-    <div class="card card-body">
-    <p>Enter <b>your</b> name and the number of the <b>team you are scouting</b> before you begin.
-      If a team does not show up, you do not have to fill out this form. Rather, watch the match and record comments in Slack.
-      Hover over something if you don't know what it means and always ask if you don't understand. <a href="sms:3103675159" class="btn btn-warning">Something not working? Click to text Abby.</a>
-      <a href="mailto:afischler263@milkenschool.org" target="_blank" class="btn btn-secondary">General feedback about the form? Click to email Abby.</a>
-    </div></div>
-
-<!--FORM POST LINK. THE SCRIPT NEEDS TO HAVE A NEW VERSION DEPLOYED VIA GOOGLE SCRIPT AFTER ALL CHANGES.
-Important notes:
-* Make sure your link follows the format "https://scripts.google.com/macros/s/some-long-key/exec"
-* The header rows need to match the field exactly as they are written on the form.
-* Use ONE FORM PER SEASON (i.e. do not make a new form for new events or added/removed data. Just add more columns as needed).
--->
-
-    <form id="gform" method="POST" class="pure-form pure-form-stacked" action="https://script.google.com/a/milkenschool.org/macros/s/AKfycbwHosE1m-6B_-44ZCKLFtnlOjcqw9c77XBuIBuZbQ/exec">
-
-<!-- Form write key. The key in "value" should be something
-unique (as in, not an event code or something re-used year to year.
-I usually use the format mk<<shortname>><<eventcode>> (e.g. mk2019vegasnvlv).
-Make sure if you share this source code with other teams, you change the
-placeholder value, lest they get your data!
-
-This key makes it so that you can use the same form for the whole year but then
-extract the data only for one event at a time. It is also an easy way to test the
-data and test different versions of the form (e.g. mktest1, mktest2, etc.).
-
-It is also very important to keep it hidden. That way, users can't change it
-by accident. If they do, the data is much harder to get later. (Aside:
-hidden="hidden" is redundant but parallel. You can always just write hidden).
--->
-	    <input type="text" name="formwritekey" value="mk2019laregional" hidden="hidden" placeholder="event save destination"></input>
-
-
-
-<!--Prematch table-->
-      <table id="tablePreview" class="table table-striped table-sm table-borderless table-responsive align-middle">
-      <tbody>
-        <tr>
-          <th scope="row">Scout Name and Team</th>
-          <td><input name="scout" type="text" placeholder="Dean Kamen - 1836" required></input></td>
-        </tr>
-        <tr>
-          <th scope="row">Team Number</th>
-          <td>      <div class="input-group mb-2 mr-sm-2">
-                  <div class="input-group-prepend">
-                    <div class="input-group-text">frc</div>
-                  </div>
-                <input name="team" type="text" placeholder="####" maxlength="4" pattern="[0-9].{0,}" title="Team number only. 1 to 4 numbers." required></input>
-                </div></td>
-        </tr>
-        <tr>
-          <th scope="row">Match</th>
-          <td><input type="radio" name="matchtype" value="qm" checked="checked">Qualification</input>
-              <input type="radio" name="matchtype" value="qf">QF</input>
-              <input type="radio" name="matchtype" value="sf">SF</input>
-              <input type="radio" name="matchtype" value="f">Finals</input>
-<!-- The pattern ensures that users can only enter valid match numbers-->
-<input name="matchnumber" type="text" placeholder="###" maxlength="3" pattern="[0-9].{0,}" title="Match number only. 1 to 3 numbers." required></input></td>
-        </tr>
-        <tr>
-          <th scope="row">Status</th>
-          <td>
-  <!-- No Show is currently hidden. This is because based on the 2019 API
-from FIRST, it can be determined if a team was a no show without needing
-a human to collect it. If you need to know in the future, you can uncomment it.-->
-		  <!--<input type="checkbox" name="noshow" value="noshow" disabled="disabled" hidden="hidden">No Show</input>-->
-          <input type="checkbox" name="cantmove" value="cantmove">Can't Move</input>
-          <input type="checkbox" name="lostcom" value="lostcomm"><a data-toggle="tooltip" title="RSL is solid or turns off mid-match">Lost comm</a></input>
-          <input type="checkbox" id="myCheck" onclick="myFunction()" name="disabled" value="disabled">Disabled by field staff</input></td>
-        </tr>
-      </tbody>
-    </table>
-    <p id="text" style="display:none">      <textarea placeholder="Please describe why the robot was disabled." name="dbfs" cols="50" rows="5"></textarea>
-</p>
-
-<!--main table-->
-    <table id="tablePreview" class="table table-striped table-sm table-borderless table-responsive align-middle">
-      <thead>
-        <tr>
-          <th></th>
-          <th><a data-toggle="tooltip" title="First 15 seconds, pre programmed.">Auto</a></th>
-          <th>Teleop</th>
-        </tr>
-      </thead>
-    <tbody>
-      <!-- The deploy from x data is also exposed via the API. -->
-
-	    <!-- <tr>
-        <th scope="row">Deploy from <a data-toggle="tooltip" title="<img class='img-thumbnail' src='platform.jpg'/>" rel="tooltip">HAB</a></th>
-      <td>
-      <div class="form-group">
-        <select class="form-control col-8" name="deployfromhab" disabled="disabled" hidden="hidden">
-          <option value="none">None</option>
-          <option value="L1">Cross from Level 1</option>
-          <option value="L2">Cross from Level 2</option>
-        </select>
-      </div>
-      <input type="checkbox" name="habauto" value="auto">Auto</input>
-
-    </td>
-        <td></td>
-      </tr> -->
-      <!--
-      <tr>
-        <th scope="row">Crossed the line</th>
-        <td><input class="col-5" name="cross-in-auto" type="checkbox" value="crossed"></input></td>
-          <td></td>
-
-      </tr>
-        -->
-      <tr>
-        <th scope="row"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='power-cell.jpg'/>">Power Cells</a> scored <a data-toggle="tooltip" title="<img class='img-thumbnail' src='goal-bottom.png'/>">bottom</a></th>
-
-        <td><input class="col-5" name="powercells-bottom-auto" type="number" required placeholder="##" value="0"></input></td>
-        <td><input class="col-5" name="powercells-bottom-teleop" type="number" required placeholder="##" value="0"></input></td>
-      </tr>
-      <tr>
-        <th scope="row"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='power-cell.jpg'/>">Power Cells</a> on <a data-toggle="tooltip" title="<img class='img-thumbnail' src='goal-outter-inner.png'/>">in upper or inner</a></th>
-        <td><input class="col-5" name="power-cell-top" type="number" required placeholder="##" value="0" title="Only 20 cargo and 20 hatches total may be placed"></input>  <br><input name="auto-power-cell-inner" type="checkbox" value="inner"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='goal-inner.png'/>">Inner</a></input>
-              <input name="auto-power-cell-outter" type="checkbox" value="outer"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='goal-outter.png'/>">Outter</a></input></td>
-          <td><input class="col-5" name="power-cell" type="number" required placeholder="##" value="0" title="Only 20 cargo and 20 hatches total may be placed"></input>
-            <br><input name="power-cell-inner" type="checkbox" value="inner"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='goal-inner.png'/>">Inner</a></input>
-                <input name="power-cell-outter" type="checkbox" value="outer"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='goal-outter.png'/>">Outter</a></input>
-                </td>
-      </tr>
-      <tr>
-        <th scope="row"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='wheel.png'/>">Spun 3 times</a></a></th>
-        <td></td>
-          <td><input class="col-5" name="spun-three-times-teleop" required type="checkbox" </input></td>
-      </tr>
-      <tr>
-        <th scope="row"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='wheel.png'/>">Spun to correct color</a></a></th>
-        <td></td>
-          <td><input class="col-5" name="spun-to-correct-color-teleop" required type="checkbox" </input></td>
-      </tr>
-
-
-<!-- End game data is exposed via API (yay). -->
-<!--<tr>
-        <th scope="row"><a data-toggle="tooltip" title="<img class='img-thumbnail' src='platform.jpg'/>" rel="tooltip">Climb</a></th>
-        <td></td>
-        <td>
-            <div class="form-group">
-              <select class="form-control col-8" name="endgame" disabled="disabled" hidden="hidden">
-                <option value="none">None</option>
-                <option value="L1">Level 1</option>
-                <option value="L2">Level 2</option>
-                <option value="L2">Level 3</option>
-              </select>
-            </div>
-          </td>
-      </tr>-->
-      <tr>
-        <th scope="row">Robot Stage in End Game</th>
-        <td></td>
-        <td>
-          <div class="form-group">
-            <select class="form-control col-8" name="endgame">
-              <option value="0">None</option>
-              <option value="parked">Parked</option>
-              <option value="hung">Hung</option>
-            </select>
-          </div></td>
-      </tr>
-      <tr>
-        <th scope="row"><a data-toggle="tooltip" title="Team lifted other robot(s) so that they earn climb points">Buddy climb</th>
-        <td></td>
-        <td>
-          <div class="form-group">
-            <select class="form-control col-8" name="buddy">
-              <option value="0">None</option>
-              <option value="1">1 Robot</option>
-              <option value="2">2 Robots</option>
-            </select>
-          </div></td>
-      </tr>
-
-    </tbody>
-  </table>
-  <a class="btn btn-primary btn-small" data-toggle="collapse" href="#comments" role="button" aria-expanded="false" aria-controls="comments">
-   Add comments
- </a>
- <div class="collapse" id="comments">
-  <div class="card card-body">
-    <textarea name="comments" cols="50" rows="5"></textarea>
-  </div></div>
-<br><br><input type="checkbox" name="confirm" value="complete" required>I am ready to submit this data and know that my responses cannot be edited.</input>
-<br><input class="btn btn-success" type="submit" value="Submit and redirect to submit another form"></input>
-<!--<br><br>
-<i>Note: fields which are <input type="text" disabled="disabled" hidden="hidden" value="disabled"></input> are calculated automatically from official API data.</i>-->
-</form>
-
-<!-- This series of scripts esentially makes better tooltips (the things you scroll over for help text) -->
-  <script>
-  $( "#spinner" ).spinner();
-  </script>
-  <script>
-  $(document).ready(function(){
-    $('[data-toggle="tooltip"]').tooltip();
-  });
-  </script>
-  <script>
-  $('a[data-toggle="tooltip"]').tooltip({
-      animated: 'fade',
-      placement: 'bottom',
-      html: true
-  });
-  </script>
-
-<!-- Tool tips don't nativley work on touch screen (which sucks since the primary application
-of this form is for use on mobile phones) but the touchHover script fixes that! -->
-
-  <script>
-  /**
- * touchHover.js
- *
- * Create tooltips on mouseover or on click (for supporting touch interfaces).
- *
- * @author C. Scott Asbach
- */
-
-$(document).ready(function() {
-
-	/**
-	 * store the value of and then remove the title attributes from the
-	 * abbreviations (thus removing the default tooltip functionality of
-     * the abbreviations)
-	 */
-	$('abbr').each(function(){
-
-		$(this).data('title',$(this).attr('title'));
-		$(this).removeAttr('title');
-
-	});
-
-    /**
-	 * when abbreviations are mouseover-ed show a tooltip with the data from the title attribute
-	 */
-	$('abbr').mouseover(function() {
-
-		// first remove all existing abbreviation tooltips
-		$('abbr').next('.tooltip').remove();
-
-		// create the tooltip
-		$(this).after('<span class="tooltip">' + $(this).data('title') + '</span>');
-
-		// position the tooltip 4 pixels above and 4 pixels to the left of the abbreviation
-		var left = $(this).position().left + $(this).width() + 4;
-		var top = $(this).position().top - 4;
-		$(this).next().css('left',left);
-		$(this).next().css('top',top);
-
-	});
-
-    /**
-	 * when abbreviations are clicked trigger their mouseover event then fade the tooltip
-	 * (this is friendly to touch interfaces)
-	 */
-	$('abbr').click(function(){
-
-		$(this).mouseover();
-
-		// after a slight 2 second fade, fade out the tooltip for 1 second
-		$(this).next().animate({opacity: 0.9},{duration: 2000, complete: function(){
-			$(this).fadeOut(1000);
-		}});
-
-	});
-
-	/**
-	 * Remove the tooltip on abbreviation mouseout
-	 */
-	$('abbr').mouseout(function(){
-
-		$(this).next('.tooltip').remove();
-
-	});
-
-});
-</script>
-    <script src="main.js"></script>
-      <script>
-      function myFunction() {
-  // Get the checkbox
-  var checkBox = document.getElementById("myCheck");
-  // Get the output text
-  var text = document.getElementById("text");
-
-  // If the checkbox is checked, display the output text
-  if (checkBox.checked == true){
-    text.style.display = "block";
-  } else {
-    text.style.display = "none";
-  }
-}
-</script>
-  </body>
-</html>
+<h1><strong>Infinite Recharge</strong></h1>
+<h4>Powered by Team 1836: The MilkenKnights</h4>
+<h4><a role="button" href="#help" data-toggle="collapse" aria-expanded="false" aria-controls="comments"> Help </a></h4>
+<div>
+<div>
+<p>Enter <strong>your</strong> name and the number of the <strong>team you are scouting</strong> before you begin. Watch the match and record comments in Slack. Hover over something if you don't know what it means and always ask if you don't understand. <a href="sms:3103675159">Something not working? Click to text Abby.</a> <a href="mailto:afischler263@milkenschool.org" target="_blank" rel="noopener">General feedback about the form? Click to email Abby.</a></p>
+</div>
+</div>
+<form action="https://script.google.com/a/milkenschool.org/macros/s/AKfycbwHosE1m-6B_-44ZCKLFtnlOjcqw9c77XBuIBuZbQ/exec" method="POST"><input hidden="hidden" name="formwritekey" type="text" value="mk2019laregional" placeholder="event save destination" />
+<table>
+<tbody>
+<tr>
+<th scope="row">Scout Name and Team</th>
+<td><input name="scout" required="" type="text" placeholder="Dean Kamen - 1836" /></td>
+</tr>
+<tr>
+<th scope="row">Team Number</th>
+<td>
+<div>
+<div>
+<div>FRC</div>
+</div>
+<input title="Team number only. 1 to 4 numbers." maxlaength="4" name="team" pattern="[0-9].{0,}" required="" type="text" placeholder="####" /></div>
+</td>
+</tr>
+<tr>
+<th scope="row">Match</th>
+<td><input checked="checked" name="matchtype" type="radio" value="qm" />Qualification <input name="matchtype" type="radio" value="qf" />QF <input name="matchtype" type="radio" value="sf" />SF <input name="matchtype" type="radio" value="f" />Finals <input title="Match number only. 1 to 3 numbers." maxlength="3" name="matchnumber" pattern="[0-9].{0,}" required="" type="text" placeholder="###" /></td>
+</tr>
+<tr>
+<th scope="row">Status</th>
+<td><input name="cantmove" type="checkbox" value="cantmove" />Can't Move <input name="lostcom" type="checkbox" value="lostcomm" /><a title="RSL is solid or turns off mid-match" data-toggle="tooltip">Lost comm</a> <input name="disabled" type="checkbox" value="disabled" />Disabled by field staff</td>
+</tr>
+</tbody>
+</table>
+<p><textarea cols="50" name="dbfs" rows="5" placeholder="Please describe why the robot was disabled."></textarea></p>
+<table>
+<thead>
+<tr>
+<th><a title="First 15 seconds, pre programmed." data-toggle="tooltip">Auto</a></th>
+<th>Teleop</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row"><a title="&lt;img class='img-thumbnail' src='power-cell.jpg'/&gt;" data-toggle="tooltip">Power Cells</a> scored <a title="&lt;img class='img-thumbnail' src='goal-bottom.png'/&gt;" data-toggle="tooltip">bottom</a></th>
+<td><input name="powercells-bottom-auto" required="" type="number" value="0" placeholder="##" /></td>
+<td><input name="powercells-bottom-teleop" required="" type="number" value="0" placeholder="##" /></td>
+</tr>
+<tr>
+<th scope="row"><a title="&lt;img class='img-thumbnail' src='power-cell.jpg'/&gt;" data-toggle="tooltip">Power Cells</a> on <a title="&lt;img class='img-thumbnail' src='goal-outter-inner.png'/&gt;" data-toggle="tooltip">in upper or inner</a></th>
+<td><input title="Only 20 cargo and 20 hatches total may be placed" name="power-cell-top" required="" type="number" value="0" placeholder="##" /> <br /><input name="auto-power-cell-inner" type="checkbox" value="inner" /><a title="&lt;img class='img-thumbnail' src='goal-inner.png'/&gt;" data-toggle="tooltip">Inner</a> <input name="auto-power-cell-outter" type="checkbox" value="outer" /><a title="&lt;img class='img-thumbnail' src='goal-outter.png'/&gt;" data-toggle="tooltip">Outter</a></td>
+<td><input title="Only 20 cargo and 20 hatches total may be placed" name="power-cell" required="" type="number" value="0" placeholder="##" /> <br /><input name="power-cell-inner" type="checkbox" value="inner" /><a title="&lt;img class='img-thumbnail' src='goal-inner.png'/&gt;" data-toggle="tooltip">Inner</a> <input name="power-cell-outter" type="checkbox" value="outer" /><a title="&lt;img class='img-thumbnail' src='goal-outter.png'/&gt;" data-toggle="tooltip">Outter</a></td>
+</tr>
+<tr>
+<th scope="row"><a title="&lt;img class='img-thumbnail' src='wheel.png'/&gt;" data-toggle="tooltip">Spun 3 times</a></th>
+<td>&nbsp;<input name="spun-three-times-teleop" required="" type="checkbox" /></td>
+<td><input name="spun-three-times-teleop" required="" type="checkbox" /></td>
+</tr>
+<tr>
+<th scope="row">Robot Stage in End Game</th>
+<td>
+<div><select name="endgame">
+<option value="0">None</option>
+<option value="parked">Parked</option>
+<option value="hung">Hung</option>
+</select></div>
+</td>
+</tr>
+<tr>
+<th scope="row"><a title="Team lifted other robot(s) so that they earn climb points" data-toggle="tooltip">Buddy climb</a></th>
+<td>
+<div><select name="buddy">
+<option value="0">None</option>
+<option value="1">1 Robot</option>
+<option value="2">2 Robots</option>
+</select></div>
+</td>
+</tr>
+</tbody>
+</table>
+<p><a role="button" href="#comments" data-toggle="collapse" aria-expanded="false" aria-controls="comments"> Add comments</a></p>
+<div>
+<div><textarea cols="50" name="comments" rows="5"></textarea></div>
+</div>
+<br /><br /><input name="confirm" required="" type="checkbox" value="complete" />I am ready to submit this data and know that my responses cannot be edited. <br /><input type="submit" value="Submit and redirect to submit another form" /></form>
+<p>The <a href="https://ruwix.com/" target="_blank" rel="nofollow noopener">Rubik's Cube Wikipedia</a> is a the best place to learn about the Worlds best selling puzzle toy.</p>
